@@ -12,8 +12,8 @@ import (
 // Config holds the configuration needed by the tools package to operate.
 // It decouples the tools from global state, making them testable and reusable.
 type Config struct {
-	// NotesDir is the absolute path to the directory where markdown files are stored.
-	NotesDir string
+	// WorkspaceDir is the absolute path to the directory where markdown files are stored.
+	WorkspaceDir string
 }
 
 // RegisterAll registers every available tool with the given MCP server.
@@ -24,24 +24,24 @@ func RegisterAll(s *server.MCPServer, cfg Config) {
 	registerDateTimeTools(s)
 }
 
-// getSafePath resolves a filename relative to the configured notes directory.
+// getSafePath resolves a filename relative to the configured workspace directory.
 // It enforces three invariants:
 //  1. The filename must end with ".md" (appends it if missing).
 //  2. The resulting path is cleaned to eliminate traversal sequences (e.g. "../").
-//  3. The final absolute path must remain within the permitted notes directory.
+//  3. The final absolute path must remain within the permitted workspace directory.
 //
 // If any check fails an error is returned; otherwise the absolute safe path is returned.
-func getSafePath(notesDir, filename string) (string, error) {
+func getSafePath(workspaceDir, filename string) (string, error) {
 	if !strings.HasSuffix(filename, ".md") {
 		filename += ".md"
 	}
 
-	targetPath := filepath.Clean(filepath.Join(notesDir, filename))
+	targetPath := filepath.Clean(filepath.Join(workspaceDir, filename))
 
-	absNotesDir, _ := filepath.Abs(notesDir)
+	absWorkspaceDir, _ := filepath.Abs(workspaceDir)
 	absTarget, _ := filepath.Abs(targetPath)
 
-	if !strings.HasPrefix(absTarget, absNotesDir) {
+	if !strings.HasPrefix(absTarget, absWorkspaceDir) {
 		return "", fmt.Errorf("security violation: access denied outside allowed directory")
 	}
 

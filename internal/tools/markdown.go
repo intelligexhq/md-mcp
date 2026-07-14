@@ -48,7 +48,7 @@ func registerMarkdownTools(s *server.MCPServer, cfg Config) {
 // subdirectories are ignored.
 func makeListFilesHandler(cfg Config) server.ToolHandlerFunc {
 	return func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		files, err := os.ReadDir(cfg.NotesDir)
+		files, err := os.ReadDir(cfg.WorkspaceDir)
 		if err != nil {
 			return mcp.NewToolResultError(fmt.Sprintf("Failed to read directory: %v", err)), nil
 		}
@@ -74,7 +74,7 @@ func makeReadFileHandler(cfg Config) server.ToolHandlerFunc {
 			return mcp.NewToolResultError("missing required argument: filename"), nil
 		}
 
-		path, err := getSafePath(cfg.NotesDir, filename)
+		path, err := getSafePath(cfg.WorkspaceDir, filename)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
@@ -102,7 +102,7 @@ func makeWriteFileHandler(cfg Config) server.ToolHandlerFunc {
 			return mcp.NewToolResultError("missing required argument: content"), nil
 		}
 
-		path, err := getSafePath(cfg.NotesDir, filename)
+		path, err := getSafePath(cfg.WorkspaceDir, filename)
 		if err != nil {
 			return mcp.NewToolResultError(err.Error()), nil
 		}

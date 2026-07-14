@@ -5,6 +5,11 @@ GOFUMPT := go run mvdan.cc/gofumpt@latest
 GOIMPORTS := go run golang.org/x/tools/cmd/goimports@latest
 GOLANGCI := go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
+VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
+COMMIT  := $(shell git rev-parse --short HEAD 2>/dev/null || echo "none")
+DATE    := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
+LDFLAGS := -s -w -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.date=$(DATE)
+
 setup:
 	go mod tidy
 
@@ -20,10 +25,10 @@ test:
 	go tool cover -html=coverage.out -o coverage.html
 
 build:
-	go build -ldflags="-s -w" -o bin/md-mcp ./cmd/md-mcp
+	go build -ldflags="$(LDFLAGS)" -o bin/md-mcp ./cmd/md-mcp
 
 run: build
-	./bin/app
+	./bin/md-mcp
 
 clean:
 	rm -rf bin/ coverage.*
