@@ -1,9 +1,14 @@
-# local machine markdown mcp server
+# md-mcp - server for managing markdown files
 
-simple stdio mcp server for allowing agent clients to manage markdown files within permitted directory.
+lean mcp server for agent clients to work with markdown files within strictly limited directory / workspace on local machine. works over `stdio`.
+
+## usage
+
+point your agentic clients (like Open Code, Claude Code , 5ire etc) and their mcp configurations to the `mcp-md` binary. it will become available in the tools section.
+
+## dev
 
 ```bash
-
 make setup
 make lint
 make build
