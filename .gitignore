@@ -1,0 +1,4 @@
+# project ignores
+bin
+coverage.html
+coverage.out
