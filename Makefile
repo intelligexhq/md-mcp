@@ -20,7 +20,7 @@ test:
 	go tool cover -html=coverage.out -o coverage.html
 
 build:
-	go build -ldflags="-s -w" -o bin/mcp-md ./cmd/mcp-md
+	go build -ldflags="-s -w" -o bin/md-mcp ./cmd/md-mcp
 
 run: build
 	./bin/app
