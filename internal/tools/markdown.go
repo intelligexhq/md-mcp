@@ -16,20 +16,23 @@ import (
 func registerMarkdownTools(s *server.MCPServer, cfg Config) {
 	defs := []toolDef{
 		{
-			tool: mcp.NewTool("list_markdown_files",
+			tool: mcp.NewTool(
+				"list_markdown_files",
 				mcp.WithDescription("Lists all the markdown files available in the workspace."),
 			),
 			handler: makeListFilesHandler(cfg),
 		},
 		{
-			tool: mcp.NewTool("read_markdown_file",
+			tool: mcp.NewTool(
+				"read_markdown_file",
 				mcp.WithDescription("Reads and returns the complete text content of a specific markdown file."),
 				mcp.WithString("filename", mcp.Required(), mcp.Description("The name of the file to read (e.g., 'notes.md')")),
 			),
 			handler: makeReadFileHandler(cfg),
 		},
 		{
-			tool: mcp.NewTool("write_markdown_file",
+			tool: mcp.NewTool(
+				"write_markdown_file",
 				mcp.WithDescription("Creates a new markdown file or overwrites an existing one with new content."),
 				mcp.WithString("filename", mcp.Required(), mcp.Description("The name of the file to create/update")),
 				mcp.WithString("content", mcp.Required(), mcp.Description("The full markdown content to write")),
@@ -107,7 +110,7 @@ func makeWriteFileHandler(cfg Config) server.ToolHandlerFunc {
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 
-		err = os.WriteFile(path, []byte(content), 0644)
+		err = os.WriteFile(path, []byte(content), 0o644)
 		if err != nil {
 			return mcp.NewToolResultError(fmt.Sprintf("Failed to write file: %v", err)), nil
 		}

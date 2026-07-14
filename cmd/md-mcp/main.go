@@ -7,8 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mark3labs/mcp-go/server"
 	"local-markdown-mcp/internal/tools"
+
+	"github.com/mark3labs/mcp-go/server"
 )
 
 // version, commit, and date are injected at build time via -ldflags.
@@ -34,14 +35,15 @@ func main() {
 		return
 	}
 
-	_ = os.MkdirAll(workspaceDir, 0755)
+	_ = os.MkdirAll(workspaceDir, 0o755)
 
 	// Set up structured JSON logging to stderr so it does not interfere with
 	// the stdio-based MCP transport.
 	logger := slog.New(slog.NewJSONHandler(os.Stderr, nil))
 
 	// Create the MCP server instance.
-	s := server.NewMCPServer("md-mcp", version,
+	s := server.NewMCPServer(
+		"md-mcp", version,
 		server.WithLogger(logger),
 	)
 

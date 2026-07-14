@@ -14,7 +14,8 @@ import (
 // unavailable to it since LLMs have no built-in clock.
 func registerDateTimeTools(s *server.MCPServer) {
 	def := toolDef{
-		tool: mcp.NewTool("get_current_datetime",
+		tool: mcp.NewTool(
+			"get_current_datetime",
 			mcp.WithDescription("Returns the current date and time in ISO 8601 format (UTC) and the local timezone."),
 		),
 		handler: getDateTimeHandler,
@@ -29,7 +30,8 @@ func getDateTimeHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.
 	now := time.Now()
 	localZone, _ := now.Zone()
 	return mcp.NewToolResultText(
-		fmt.Sprintf("UTC:   %s\nLocal: %s (%s)",
+		fmt.Sprintf(
+			"UTC:   %s\nLocal: %s (%s)",
 			now.UTC().Format(time.RFC3339),
 			now.Format(time.RFC3339),
 			localZone,
