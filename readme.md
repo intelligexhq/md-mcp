@@ -1,18 +1,18 @@
-# md-mcp - markdown file mcp server
+# mcp server for markdown 
 
-lean, localy run mcp server for agentic clients to work with markdown files on local machines. within strictly limited directories / workspaces. server works over `stdio`.
+localy run `mcp server` which allows agentic clients to work with markdown files on the local machines. focused on providing agents with access to strictly defined directories / workspaces. its a single binary server which works over `mcp stdio`.
 
 ## usage
 
-if you fancy little bit of control and security while using agentic clients and applications on your machine, the good practice is usually to first disable the inbuilt file or system management tools in these agentic clients.
+if you are interested in control, security and restricting what agentic clients do on your machine, the good practice is usually to disable the inbuilt file and system management tools in these agentic clients.
 
-so you can decide what do you allow them to do on your devices.
+so you can decide and configure what actions you allow for agentic clients running on your machine.
 
-next, you provide them with multiple mcp tools to work with your filesystem, os etc. this way, you can control, log and manage how agentic applications are behaving and what are they allowed to do.
+next, you provide them with multiple mcp tools to work with your filesystem, internet access, database access etc. this way, you control, log and manage how agentic applications are using your machine and OS.
 
-this project, `md-mcp` is one of such very fast local mcp tools - dedicated to provide access to markdown file management, within specifically allowed workspace.
+this project, `md-mcp` is one of such fast local mcp tools - dedicated to provide access for agents to markdown file management, only within specifically allowed workspace directory.
 
-point your agentic clients (5ire, etc) within their mcp configurations to the `mcp-md` binary you build. agents will run it and use mcp `stdio` to interact with it. it will become available in the tools section.
+point your agentic clients (opencode, cline, 5ire, etc) within their mcp configurations to the `mcp-md` binary. agents will use mcp `stdio` to start and interact with it. `mcp-md` will become available in the tools section within agentic client.
 
 ## dev
 
